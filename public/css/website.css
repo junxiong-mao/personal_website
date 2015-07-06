@@ -1,0 +1,52 @@
+@font-face {
+	font-family: "Montserrat";
+	src: url(/fonts/Montserrat/Montserrat-Regular.ttf),
+		url(/fonts/Montserrat/Montserrat-Regular.otf);		
+}
+
+@font-face {
+	font-family: "MSYahei";
+	src: url(/fonts/MSYahei/chinese.msyh.ttf);
+}
+
+
+p
+{
+	word-wrap: break-word;
+	word-break: normal;
+}
+
+p.footer
+{
+	font-size: 12px;
+}
+
+h1, h2, h3, h4, h5, a
+{
+	word-wrap: break-word;
+	word-break: normal;
+}
+
+table.sidebar-info
+{
+	border: none;
+}
+
+a:hover
+{
+	text-decoration: underline;
+}
+
+a.sidebar
+{
+	color: #666666;
+}
+a.sidebar:hover
+{
+	color: #000;
+	text-decoration: none;
+}
+.widget
+{
+	margin-bottom: 30px;
+}

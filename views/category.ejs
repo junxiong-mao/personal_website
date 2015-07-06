@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Jx Site</title>
+	<% include css.ejs %>
+	<% include upperjs.ejs %>
+</head>
+<body>
+	<% include navbar.ejs %>
+	<main id='main'>
+		<div class="container">
+			<div class='row topspace'>
+				<div class='col-md-8 maincontent'>
+					<% blogsArray.forEach(function(blog, index)
+					{ %>
+						<article class="post-<%= blog['blog_id'] %>">
+							<header class='entry-header'>
+								<h1 class="entry-title"><a href=<%= '/blogs/article/' + blog['blog_id'] %> rel="bookmark"><%= blog['blog_title'] %></a></h1>
+								<div class="entry-meta"> 
+									<%= blog['blog_time'] %>
+								</div>
+								<div class='entry-author'>
+									Author: <%= blog['blog_author'] %>
+								</div>
+							</header>
+							<div class='entry-content'>
+								<% var textArr = blog['blog_content'].split(/(?:\r\n|\r|\n)/g); %>
+								<p><%= textArr[0] %></p>
+								<% if (textArr.length > 1)
+								{ %>
+									<a href=<%= '/blogs/article/' + blog['blog_id'] %> class='more-link'>Continue reading...</a>
+								<% } %>
+								<% if (admin)
+								{ %>
+									<footer>
+										<span>
+											<a href="javascript:;" class='remove-btn' data-id="<%= blog['blog_id'] %>"><small><strong class='text-danger'>Remove</strong></small></a>
+											<% if (admin)
+											{ %>
+												<strong>|</strong>
+												<a href="/edit/<%= blog['blog_id'] %>" class='text-success'><small><strong>Edit</strong></small></a>
+											<% } %>
+										</span>
+									</footer>
+								<% } %>
+						</div>
+						</article>
+					<% }) %>
+				</div>
+				<% include sidebar.ejs %>
+			</div>
+		</div>
+	</main>
+	<% include footer.ejs %>
+
+	<% include lowerjs.ejs %>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<script type="text/javascript">
+		$('.selectpicker').selectpicker();
+		$('.kind').click(function()
+		{
+			var name = $(this).html();
+			$('input.category-input').val(name);
+		})
+		$('.remove-btn').click(function() {
+			var blogId = $(this).data('id');
+			if (confirm('Are you sure you want to delete this article?')) {
+				$.post('/remove-article/' + blogId, function(result) {
+					if (result.success) {
+						$(".post-" + blogId).remove();
+					}
+					else {
+						alert('Something wrong happened.');
+					}
+				})
+			}
+		})
+	</script>
+</body>
+</html>

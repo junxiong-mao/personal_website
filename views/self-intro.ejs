@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My profile</title>
+  <% include css.ejs %>
+  <% include upperjs.ejs %>
+</head>
+<body>
+  <% include navbar.ejs %>
+<div class='container'>
+  <div class='personal'>
+    <div class='row'>
+      <div class='col-md-4'>
+        <img src="/images/personal.jpg">
+      </div>
+      <div class='col-md-8'>
+        <br>
+        <p>Name: <span>Mao Junxiong</span></p>
+        <p>姓名：  <span>毛俊雄</span></p>
+        <p>#800, Dongchuan Road, Minhang district, Shanghai, P.R.China</p>
+        <p>junxiong.mao@gmail.com</p>
+      </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class='row'>
+      <div class='col-md-12'>
+        <h6>Education: </h6>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-md-6'>
+        <p>Shanghai Jiao Tong University (SJTU), Shanghai, P.R.China Bachelor of Science in Electrical & Computer Engineering</p>
+      </div>
+      <div class='col-md-3 col-md-offset-3'>
+        <p class='text-left'>2012-2016 (Expected)</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-md-6'>
+        <p>Tsinghua high school, Beijing, P.R.China</p>
+      </div>
+      <div class='col-md-3 col-md-offset-3'>
+        <p class='text-left'>2009-2012</p>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col-md-12'>
+        <h6>Computer skills:</h6>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-md-12'>
+        <p><span>Operating Systems: </span>Windows 8.1, Ubuntu</p>
+        <p><span>Languages: </span>C, C++, Javascript, Html, Css, Java, MYSQL, Matlab, Verilog HDL</p>
+        <p><span>Web skills: </span>Node.js, Express, Bootstrap, jQuery</p>
+        <p><span>Software: </span>g++, gcc, node, Visual Studio, Eclipse</p>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col-md-12'>
+        <h6>Working experience:</h6>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-md-9'>
+        <h6>Software engineer intern at Intel cooperation, Zizhu, Shanghai, P.R.China</h6>
+        <p>
+          Helping develop a web application that monitors sensors' status on server boards and controls server systems at Intel corporation, Data Center Group (DCG).
+          <br/>
+          Job responsibilities including front end development based on Bootstrap framework as well as jQuery technology, and server side development based on Node.js platform, Express framework.
+          <br/>
+          Related languages and skills: HTML/CSS, Javascript, Node.js/Express
+          <br/>
+          Web application runs on Intel Edison board which is an X86 architecture chip with embedded Linux system.
+        </p>
+      </div>
+      <div class='col-md-3'>
+        <p class='text-left'>2014.12-2015.5</p>
+        <img src="/images/intel.png">
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col-md-9'>
+        <h6>Teaching assistant at Shanghai Jiao Tong University, Shanghai, P.R.China</h6>
+        <p>
+          Worked as a teaching assistant of the course Introduction to Computers & Programming.
+          <br/>
+          Course was relate to programming in Matlab, C & C++.
+          <br/>
+          Held 2-hour recitation class each week in English.
+        </p>
+      </div>
+      <div class='col-md-3'>
+        <p class='text-left'>2014.9-2014.12</p>
+        <img src="/images/sjtu.png" style="width: 72px">
+      </div>
+    </div>
+  </div>
+</div>
+<% include footer.ejs %>
+</body>
+</html>

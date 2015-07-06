@@ -1,0 +1,85 @@
+<div class="col-md-3 col-md-offset-1 sidebar sidebar-left">
+	<table class='table'>
+		<tbody>
+			<tr>
+				<td>Visitors</td>
+				<td class='visit-num'></td>
+			</tr>
+			<tr>
+				<td>Ip</td>
+				<td class='visit-ip'></td>
+			</tr>
+			<tr>
+				<td>Country</td>
+				<td class='visit-country'></td>
+			</tr>
+			<tr>
+				<td>City</td>
+				<td class='visit-city'></td>
+			</tr>
+			<tr>
+				<td>Org</td>
+				<td class='visit-org'></td>
+			</tr>
+		</tbody>
+	</table>
+	<table class='table table-hover'>
+		<thead>
+			<tr>
+				<th>Mostly viewed</th>
+				<th><i class='fa fa-eye'></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% hotList.forEach(function(list)
+			{ %>
+				<tr>
+					<td><a href=<%= '/blogs/article/' + list.blog_id %> class='sidebar'><%= list.blog_title %></a></td>
+					<td><%= list.blog_reading_number %></td>
+				</tr>
+			<% }) %>
+		</tbody>
+	</table>
+	<table class='table table-hover'>
+		<thead>
+			<tr>
+				<th>Most popular</th>
+				<th><i class='fa fa-heart'></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% likeList.forEach(function(list)
+			{ %>
+				<tr>
+					<td><a href=<%= '/blogs/article/' + list.blog_id %> class='sidebar'><%= list.blog_title %></a></td>
+					<td class='like-count-<%= list.blog_id %>'><%= list.blog_like_number %></td>
+				</tr>
+			<% }) %>
+		</tbody>
+	</table>
+
+	<table class='table table-hover'>
+		<thead>
+			<tr>
+				<th>Categories</th>
+				<th>#</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% for (var key in categoryList)
+			{ %>
+				<tr>
+					<td><a href='/blogs/<%= key %>' class='sidebar'><%= key %></a></td>
+					<td><%= categoryList[key] %></td>
+				</tr>
+			<% } %>
+		</tbody>
+	</table>
+
+</div>
+
+<script type="text/javascript">
+	$.post('/visitorNumber', function(res) {
+		$('.visit-num').text(res[0]['visitor']);
+	})
+</script>

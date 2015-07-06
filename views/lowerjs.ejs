@@ -1,0 +1,57 @@
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/bootstrap-switch.js"></script>
+<script type="text/javascript" src="/js/bootstrap-select.js"></script>
+<script type="text/javascript" src="/js/bootstrap-table.js"></script>
+<!-- <script type="text/javascript" src="/js/template.js"></script> -->
+
+<script type="text/javascript" src="/js/syntaxJS/shCore.js"></script>
+<!-- Syntax highlighter brushes -->
+<script type="text/javascript" src="/js/syntaxJS/shBrushAS3.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushBash.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushColdFusion.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushCSharp.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushCpp.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushCss.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushDelphi.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushDiff.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushErlang.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushGroovy.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushJScript.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushJava.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushJavaFX.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushPerl.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushPhp.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushPlain.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushPowerShell.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushPython.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushRuby.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushScala.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushSql.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushVb.js"></script>
+<script type="text/javascript" src="/js/syntaxJS/shBrushXml.js"></script>
+<script type="text/javascript">
+	SyntaxHighlighter.all();
+	$("textarea").keydown(function(e) {
+	    if(e.keyCode === 9) { // tab was pressed
+	        // get caret position/selection
+	        var start = this.selectionStart;
+	        var end = this.selectionEnd;
+
+	        var $this = $(this);
+	        var value = $this.val();
+
+	        // set textarea value to: text before caret + tab + text after caret
+	        $this.val(value.substring(0, start)
+	                    + "\t"
+	                    + value.substring(end));
+
+	        // put caret at right position again (add one for the tab)
+	        this.selectionStart = this.selectionEnd = start + 1;
+
+	        // prevent the focus lose
+	        e.preventDefault();
+	    }
+	});
+
+	
+</script>

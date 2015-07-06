@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Jx Site</title>
+	<% include css.ejs %>
+	<% include upperjs.ejs %>
+</head>
+<body>
+	<% include navbar.ejs %>				
+	<h1 class='entry-title'>Edit blog</h1>
+	<div class="container">
+		<div class='col-lg-8 col-lg-offset-2'>
+			<% if (edit)
+				{ %>
+					<form role='form' method='POST' action="/edit-blog/<%= article[0]['blog_id'] %>">
+				<% }
+			else
+				{ %>
+					<form role='form' method='POST' action='/post-blog'>
+				<% } %>
+						<div class="form-group">
+							<label for="title">Title</label>
+							<% if (edit)
+								{ %>
+									<input type="text" class="form-control" id="title" name='title' value="<%= article[0]['blog_title'] %>">
+								<% }
+							else
+								{ %>
+									<input type="text" class="form-control" id="title" name='title'>
+								<% } %>
+							
+						</div>
+						<div class='row'>
+							<div class="form-group col-lg-6">
+								<label for="title">Author</label>
+								<% if (edit)
+									{ %>
+										<input type="text" class="form-control" id="author" name='author' value="<%= article[0]['blog_author'] %>">
+									<% }
+								else
+									{ %>
+										<input type="text" class="form-control" id="author" name='author'>
+									<% } %>
+							</div>
+							<div class='form-group col-lg-6'>
+								<label for='title'>Category</label>
+								<div class='input-group'>
+									<% if (edit)
+										{ %>
+											<input type="text" class="form-control" id="category" name='category' value="<%= article[0]['category'] %>">
+										<% }
+									else
+										{ %>
+											<input type='text' class='form-control' id='category' name='category' placeholder='Please input a new category'>
+										<% } %>
+									<div class="input-group-btn">
+						                  <button type="button" class="btn btn-default 
+						                     dropdown-toggle" data-toggle="dropdown">
+						                     Choose one 
+						                     <span class="caret"></span>
+						                  </button>
+						                  <ul class="dropdown-menu pull-right">
+						                  		<% category.forEach(function(kind)
+						                  		{ %>
+						                  			<li><a href='javascript:;' class='kind'><%= kind %></a></li>
+						                  		<% }) %>
+						                  </ul>
+						              </div>
+						          </div>
+							</div>
+						</div>
+						<div class='form-group'>
+							<label for='title'>Tool bar</label>
+							<div class="input-group-btn">
+								<button type="button" class="btn btn-default" data-toggle="dropdown" title='Add programming codes'>&lt/&gt<span class="caret"></span></button>
+								<ul class='dropdown-menu pull-left'>
+									<% languageList.forEach(function(language)
+									{ %>
+										<li><a href='javascript:;' class='language'><%= language['language'] %></a></li>
+									<% }) %>
+								</ul>
+							</div>
+						</div>
+						<div class="form-group content-area">
+							<label for="content">Content</label>
+							<% if (edit)
+								{ %>
+									<textarea type="text" class='form-control' id="content" name='content' rows='40'><%= article[0]['blog_content'] %></textarea>
+								<% }
+							else
+								{ %>
+									<textarea type="text" class='form-control' id="content" name='content' rows='40'></textarea>
+								<% } %>
+						</div>
+						
+						<button type="submit" class="btn btn-success">Post</button>
+						
+						
+					</form>
+			</div>
+	</div>
+
+	<% include footer.ejs %>
+	<!-- Bootstrap core JavaScript --> 
+	<% include lowerjs.ejs %>
+	<script type="text/javascript">
+		$('.kind').click(function()
+		{
+			var selectCategory = $(this);
+			$('#category').val(selectCategory.text());
+		})
+		$('.language').click(function()
+		{
+			var languagePicker = $(this);
+			$('#content').val(function()
+			{
+				return $('#content').val() + '<INSERT_CODE>\n' + languagePicker.text() + '\n\n</INSERT_CODE>\n'
+			});
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<header id="header">
+	<div id="head" class="parallax" parallax-speed="2">
+		<h1 id="logo" class="text-center">
+			<img class="img-circle" src="/images/portrait.png" alt="">
+			<span class="title">Welcome!</span>
+		</h1>
+	</div>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">			
+			<div class="navbar-collapse collapse">
+				
+				<ul class="nav navbar-nav">
+					<li class="<%= blog%>"><a href="/blogs">Blogs</a></li>
+					<!-- <li class="<%= projects%>"><a href="/projects">Projects</a></li> -->
+					<li class="<%= contact%>"><a href="/contact">Contact me</a></li>
+					<li class="<%= selfIntro%>"><a href="/self-intro">Self intro.</a></li>
+					<% if (admin)
+					{ %>
+						<li class='<%= editBlog %>'><a href='/edit'>New blog</a></li>
+						<li><a href='/logout'><i class='fa fa-user'></i> Junxiong</a></li>
+					<% } %>
+				</ul>
+			</div>
+		</div>	
+	</nav>
+</header>

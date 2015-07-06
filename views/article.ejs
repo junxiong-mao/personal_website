@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Article</title>
+	<% include css.ejs %>
+	<% include upperjs.ejs %>
+</head>
+<body>
+	<% include navbar.ejs %>
+	<div class="container">
+		<div id='blog-container'>
+			<div class='row topspace'>			
+				<div class='col-md-8'>
+					<article>
+						<header class="entry-header">
+							<h1 class="entry-title"><%= article[0]['blog_title'] %></h1>
+							<div class="entry-meta"> 
+								<%= article[0]['blog_time'] %>		
+							</div>
+							<div class='entry-author'>Author: <%= article[0]['blog_author'] %>
+							</div>
+						</header>
+					</article>
+					<div class='entry-content'>
+						<% var textArr = article[0]['blog_content'].split(/(?:\r\n|\r|\n)/g);
+						var flag = false;
+						for (var i = 0; i < textArr.length; i++)
+						{
+							if (textArr[i] === '<INSERT_CODE>')
+							{
+								flag = true;
+								var codeCollector = [];
+								i++; 
+								var brush = '';
+								switch (textArr[i])
+								{
+									case 'C#': brush = 'c-sharp'; break;
+									case 'C++': brush = 'c'; break;
+									case 'CSS': brush = 'css'; break;
+									case 'Delphi': brush = 'delphi'; break;
+									case 'JavaScript': brush = 'js'; break;
+									case 'Java': brush = 'java'; break;
+									case 'Perl': brush = 'perl'; break;
+									case 'PHP': brush = 'php'; break;
+									case 'Python': brush = 'python'; break;
+									case 'Ruby': brush = 'ruby'; break;
+									case 'SQL': brush = 'sql'; break;
+									case 'Visual Basic': brush = 'vb'; break;
+									case 'XML': brush = 'xml'; break;
+									default: brush = 'plain'; break;
+								}
+								%>
+								<pre class="brush: <%= brush %>;">
+								<% continue;
+							}
+							if (textArr[i] === '</INSERT_CODE>')
+							{
+								codeCollector.forEach(function(line, index, array)
+								{ %><%= line %><% if (index === array.length - 1) { %></pre><% } %>
+								<% });
+								flag = false;
+								continue;
+							}
+							if (flag)
+							{
+								codeCollector.push(textArr[i]);
+							}
+							else
+							{ %>
+								<p>&nbsp&nbsp<%= textArr[i] %></p>
+							<% }
+						} %>
+					</div>
+					
+					<% if (admin)
+					{ %>
+						<footer>
+							<span>
+								<a href="javascript:;" class="remove-article"><small><strong class='text-danger'>Remove</strong></small></a>
+								<strong>|</strong>
+								<a href="/edit/<%= article[0]['blog_id'] %>"><small><strong class='text-success'>Edit</strong></small></a>
+							</span>
+						</footer>
+					<% } %>
+					<% if (!admin)
+					{ %>
+						<footer>
+							<span>
+								<a href="javascript:;" class='text-primary like' data-id='<%= article[0]['blog_id'] %>'>
+									<small>
+										<i class='fa fa-heart'></i> 
+										<strong>Like 
+											<span class='like-count'><%= article[0]['blog_like_number'] %></span>
+										</strong>
+									</small>
+								</a>
+							</span>
+						</footer>
+					<% } %>
+					<hr>
+					
+					<div id='comments'>
+						<h3 class='comments-title'><span class='comment-num'><%= comments.length %></span> comments</h3>
+						<a href="javascript:;" class="leave-comment">Leave a Comment</a>
+						<ol class='comments-list'>
+							<% comments.forEach(function(comment)
+							{ %>
+								<li class='comment' id='comment-<%= comment['id'] %>'>
+									<div>
+										<img src="/images/anonymous.jpg" alt="Avatar" class="avatar">
+										
+										<div class="comment-meta">
+											<span class="author" id="comment-author-<%= comment['id'] %>"><%= comment['name'] %></span>
+											<span class="date text-primary"><%= comment['comment_time'] %></span>
+											<span class='ip text-warning'>IP: <%= comment['ip'] %></span>
+											<span class="reply">
+												<a href='javascript:;' class='reply-button' data-id="<%= comment['id'] %>"><small><strong class='text-success'>Reply</strong></small></a>
+												
+												<% if (admin)
+												{ %>
+													<strong>|</strong>
+													<a href='javascript:;' class='remove-button' data-id="<%= comment['id'] %>"><small><strong class='text-danger'>Remove</strong></small></a>
+												<%} %>
+											</span>
+											
+											
+										</div>
+
+										<div class="comment-body">
+											<% var textArr = comment['content'].split(/(?:\r\n|\r|\n)/g);
+											var flag = false;
+											for (var i = 0; i < textArr.length; i++)
+											{
+												if (textArr[i] === '<INSERT_CODE>')
+												{
+													flag = true;
+													var codeCollector = [];
+													i++; 
+													var brush = '';
+													switch (textArr[i])
+													{
+														case 'C#': brush = 'c-sharp'; break;
+														case 'C++': brush = 'c'; break;
+														case 'CSS': brush = 'css'; break;
+														case 'Delphi': brush = 'delphi'; break;
+														case 'JavaScript': brush = 'js'; break;
+														case 'Java': brush = 'java'; break;
+														case 'Perl': brush = 'perl'; break;
+														case 'PHP': brush = 'php'; break;
+														case 'Python': brush = 'python'; break;
+														case 'Ruby': brush = 'ruby'; break;
+														case 'SQL': brush = 'sql'; break;
+														case 'Visual Basic': brush = 'vb'; break;
+														case 'XML': brush = 'xml'; break;
+														default: brush = 'plain'; break;
+													}
+													%>
+													<pre class="brush: <%= brush %>;">
+													<% continue;
+												}
+												if (textArr[i] === '</INSERT_CODE>')
+												{
+													codeCollector.forEach(function(line, index, array)
+													{ %><%= line %><% if (index === array.length - 1) { %></pre><% } %>
+													<% });
+													flag = false;
+													continue;
+												}
+												if (flag)
+												{
+													codeCollector.push(textArr[i]);
+												}
+												else
+												{ %>
+													<p>&nbsp&nbsp<%= textArr[i] %></p>
+												<% }
+											} %>
+										</div>
+									</div>
+								</li>
+							<% }) %>
+						</ol>
+					</div>
+					<hr>
+
+					<div id="respond">
+						<h3 id="reply-title">Leave a Reply</h3>
+						<form role='form' method='POST' id='comment-form' action=<%= '/post-blog-comment/' + article[0]['blog_id'] + '/null' %>>
+							<div class='form-group'>
+								<label for='title'>Tool bar</label>
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-default" data-toggle="dropdown" title='Add programming codes'>&lt/&gt<span class="caret"></span></button>
+									<ul class='dropdown-menu pull-left'>
+										<% languageList.forEach(function(language)
+										{ %>
+											<li><a href='javascript:;' class='language'><%= language['language'] %></a></li>
+										<% }) %>
+									</ul>
+								</div>
+							</div>
+							<div class="form-group content-area">
+								<label for="content">Comment</label>
+								<textarea type="text" class='form-control' id="blog-comment" name='blogComment' rows='10'></textarea>
+							</div>
+
+							<div class="form-group content-area">
+								<label for="content">Name</label>
+								<input type="text" class='form-control' id="blog-comment-name" name='blogCommentName'></input>
+							</div>
+							<button type="submit" class="btn btn-default">Post</button>
+						</form>
+					</div>
+				</div>
+				<% include sidebar.ejs %>
+			</div>
+		</div>
+	</div>
+
+	<% include footer.ejs %>
+	<!-- Bootstrap core JavaScript --> 
+	<% include lowerjs.ejs %>
+	<script type="text/javascript" src='/js/sidebar-info.js'></script>
+	<script type="text/javascript">
+		$('.reply-button').click(function()
+		{
+			$("html,body").animate(
+			{
+				scrollTop: $("#respond").offset().top
+			}, 1000);
+			var target = $("#comment-author-" + $(this).data('id')).text();
+			var targetId = $(this).data('id');
+			$('#blog-comment').val("Reply to " + target + ": ");
+			$('#comment-form').attr('action', '/post-blog-comment/' + "<%= article[0]['blog_id'] %>" + "/" + targetId);
+		})
+		$('.leave-comment').click(function()
+		{
+			$("html,body").animate(
+			{
+				scrollTop: $("#respond").offset().top
+			}, 1000);
+		})
+
+		$('.language').click(function()
+		{
+			var languagePicker = $(this);
+			$('#blog-comment').val(function()
+			{
+				return $('#blog-comment').val() + '<INSERT_CODE>\n' + languagePicker.text() + '\n\n</INSERT_CODE>\n'
+			});
+		})
+
+		$('.like').click(function() {
+			var blogId = <%= article[0]['blog_id'] %>;
+			$.post('/like-article/' + blogId, function(res) {
+				if (!res.success) {
+					alert(res.msg);
+				}
+				else {
+					var likeCount = Number($('.like-count').text());
+					$('.like-count').text(likeCount + 1);
+					$('.like-count-' + blogId).text(likeCount + 1);
+				}
+			})
+		})
+
+		$('.remove-article').click(function() {
+			if (confirm('Are you sure you want to remove this article?')) {
+				$.post("/remove-article-red/<%= article[0]['blog_id'] %>", function(success) {
+					if (success) {
+						location.href = '/';
+					}
+				});
+			}
+			
+		})
+
+		$('.remove-button').click(function() {
+			var commentId = $(this).data('id');
+			if (confirm('Are you sure you want to remove this comment?')) {
+				$.post('/remove-comment/' + commentId, function(res) {
+					if (res.success) {
+						$("#comment-" + commentId).remove();
+						var commentNum = Number($('.comment-num').text());
+						$(".comment-num").text(commentNum - 1);
+					}
+					else {
+						alert(res.message);
+					}
+				})
+			}
+		})
+
+	</script>
+</body>
+</html>

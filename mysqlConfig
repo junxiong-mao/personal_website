@@ -1,0 +1,6 @@
+#clear visitor table every day...
+#in /etc/mysql/my.cnf 
+#add: event_scheduler = on
+#under [mysqld] section
+
+create event clear_visitor_table on schedule at current_timestamp + interal 1 day do truncate table visitor;

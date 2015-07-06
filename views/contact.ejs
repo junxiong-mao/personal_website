@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact me!</title>
+<% include css.ejs %>
+<% include upperjs.ejs %>
+</head>
+<body>
+<% include navbar.ejs %>
+
+<div class="container">
+  <h2 class='entry-title'>Leave A Message</h2>
+  <div class='row topspace'>      
+    <div class='col-md-8 col-md-offset-2'>
+      <div id='comments'>
+        <a href="javascript:;" class="leave-comment">Leave a Comment</a>
+        <ol class='comments-list'>
+          <% messageList.forEach(function(comment)
+          { %>
+            <li class='comment' id='comment-<%= comment['id'] %>'>
+              <div>
+                <img src="/images/anonymous.jpg" alt="Avatar" class="avatar">
+                
+                <div class="comment-meta">
+                  <span class="author" id="comment-author-<%= comment['id'] %>"><%= comment['name'] %></span>
+                  <span class="date text-primary"><%= comment['message_date'] %></span>
+                  <span class='ip text-warning'>IP: <%= comment['ip'] %></span>
+                  <span class="reply">
+                    <a href='javascript:;' class='reply-button' data-id="<%= comment['id'] %>"><small><strong class='text-success'>Reply</strong></small></a>
+                    <% if (admin)
+                      { %>
+                        <strong>|</strong>
+                        <a href='javascript:;' class='remove-button' data-id="<%= comment['id'] %>"><small><strong class='text-danger'>Remove</strong></small></a>
+                    <%} %>
+                  </span>
+                </div>
+
+                <div class="comment-body">
+                  <% var textArr = comment['content'].split(/(?:\r\n|\r|\n)/g);
+                  var flag = false;
+                  for (var i = 0; i < textArr.length; i++)
+                  {
+                    if (textArr[i] === '<INSERT_CODE>')
+                    {
+                      flag = true;
+                      var codeCollector = [];
+                      i++; 
+                      var brush = '';
+                      switch (textArr[i])
+                      {
+                        case 'C#': brush = 'c-sharp'; break;
+                        case 'C++': brush = 'c'; break;
+                        case 'CSS': brush = 'css'; break;
+                        case 'Delphi': brush = 'delphi'; break;
+                        case 'JavaScript': brush = 'js'; break;
+                        case 'Java': brush = 'java'; break;
+                        case 'Perl': brush = 'perl'; break;
+                        case 'PHP': brush = 'php'; break;
+                        case 'Python': brush = 'python'; break;
+                        case 'Ruby': brush = 'ruby'; break;
+                        case 'SQL': brush = 'sql'; break;
+                        case 'Visual Basic': brush = 'vb'; break;
+                        case 'XML': brush = 'xml'; break;
+                        default: brush = 'plain'; break;
+                      }
+                      %>
+                      <pre class="brush: <%= brush %>;">
+                      <% continue;
+                    }
+                    if (textArr[i] === '</INSERT_CODE>')
+                    {
+                      codeCollector.forEach(function(line, index, array)
+                      { %><%= line %><% if (index === array.length - 1) { %></pre><% } %>
+                      <% });
+                      flag = false;
+                      continue;
+                    }
+                    if (flag)
+                    {
+                      codeCollector.push(textArr[i]);
+                    }
+                    else
+                    { %>
+                      <p>&nbsp&nbsp<%= textArr[i] %></p>
+                    <% }
+                  } %>
+                </div>
+              </div>
+            </li>
+          <% }) %>
+        </ol>
+      </div>
+    </div>
+    <div id='respond'>
+      <div class='message-div col-md-8 col-md-offset-2'>
+        <form role='form' method='POST' id='message-form' action='/contact/post-message/null'>
+          <div class='form-group'>
+            <label for='title'>Tool bar</label>
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default" data-toggle="dropdown" title='Add programming codes'>&lt/&gt<span class="caret"></span></button>
+              <ul class='dropdown-menu pull-left'>
+                <% languageList.forEach(function(language)
+                { %>
+                  <li><a href='javascript:;' class='language'><%= language['language'] %></a></li>
+                <% }) %>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group content-area">
+            <label for="content">Message</label>
+            <textarea type="text" class='form-control' id="message-content" name='messageContent' rows='10'></textarea>
+          </div>
+          <div class="form-group content-area">
+            <label for="content">Name</label>
+            <input type="text" class='form-control' id="message-name" name='messageName'></input>
+          </div>
+          <button type="submit" class="btn btn-default">Post</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<% include footer.ejs %>
+<!-- Bootstrap core JavaScript --> 
+<% include lowerjs.ejs %>
+
+<script type="text/javascript">
+  $('.language').click(function()
+  {
+    var languagePicker = $(this);
+    $('#message-content').val(function()
+    {
+      return $('#message-content').val() + '<INSERT_CODE>\n' + languagePicker.text() + '\n\n</INSERT_CODE>\n'
+    });
+  })
+
+  $('.reply-button').click(function()
+  {
+    $("html,body").animate(
+    {
+      scrollTop: $(".message-div").offset().top
+    }, 1000);
+    var target = $("#comment-author-" + $(this).data('id')).text();
+    var targetId = $(this).data('id');
+    $('#message-content').val("Reply to " + target + ": ");
+    $('#message-form').attr('action', '/contact/post-message/' + targetId);
+  })
+
+  $('.remove-button').click(function() {
+    var commentId = $(this).data('id');
+    if (confirm('Are you sure you want to remove this comment?')) {
+      $.post('/remove-message/' + commentId, function(res) {
+        if (!res.success) {
+          alert(res.message);
+        }
+      })
+    }
+  })
+
+</script>
+
+</body>
+</html>

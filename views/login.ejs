@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Jx Site</title><% include css.ejs %>
+	<% include upperjs.ejs %>
+</head>
+<body>
+	<% include navbar.ejs %>
+	<!-- Slider -->
+	<div class='container'>
+		<div class='row'>
+			<div class='col-lg-12'>
+				<h1 class='page-header'>Login</h1>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-lg-3'>
+				<form role='form' method='POST' action='/login'>
+					<div class="form-group">
+						<label for="name">Username</label>
+						<input type="text" class="form-control" id="name" name='user'>
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" class='form-control' id="password" name='password'>
+					</div>
+					<button type="submit" class="btn btn-default">Login</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<% include footer.ejs %>
+	<!-- Bootstrap core JavaScript --> 
+	<% include lowerjs.ejs %>
+</body>
+</html>
