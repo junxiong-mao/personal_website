@@ -213,10 +213,10 @@ a:hover {
 }
 .navbar-default {
   background-color: #ffffff;
-  border-color: #cccccc;
+  /*border-color: #cccccc;*/
 }
 .navbar-default .navbar-nav > li > a {
-  color: #454545;
+  color: #aaaaaa;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
